@@ -10,23 +10,28 @@
 </head>
 <body>
   <div class="texture-overlay"></div>
-  <div class="container">
-    <a href="assets/cv.pdf" target="_blank" class="title-link">
-      <img src="assets/paprika-title.png" alt="Paprika" class="title-image">
-    </a>
-    <div class="main-content">
-      <div class="tv-wrapper">
-        <img src="assets/oldtv.png" alt="TV" class="tv-image">
-        <img src="assets/static.gif" alt="Static" class="static-overlay" id="tv-screen">
-      </div>
-      <nav class="nav-links">
-        <a href="#" class="nav-link" data-image="img/musica.jpeg">musica</a>
-        <a href="#" class="nav-link" data-image="img/galeria.png">galeria</a>
-        <a href="#" class="nav-link" data-image="img/recitales.JPG">recitales</a>
-        <a href="#" class="nav-link" data-image="img/nosotros.JPG">nosotros</a>
-      </nav>
-    </div>
-  </div>
+  <div class="container" id="main-container"></div>
+  <div id="footer-container"></div>
+  <script src="components.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('main-container')
+      createHeader(container, true)
+      
+      const footerContainer = document.getElementById('footer-container')
+      const footer = createFooter()
+      footerContainer.appendChild(footer)
+      
+      setTimeout(() => {
+        if (typeof initHomePage === 'function') {
+          initHomePage()
+        }
+        if (typeof initFooter === 'function') {
+          initFooter()
+        }
+      }, 10)
+    })
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
