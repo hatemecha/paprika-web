@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería - PAPRIKA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+</head>
+<body>
+  <div class="texture-overlay"></div>
+  <div class="container has-content" id="main-container"></div>
+  <div id="footer-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <script src="components.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('main-container')
+      createHeader(container, false, 'galeria')
+      
+      const galleryContent = document.createElement('div')
+      galleryContent.className = 'gallery-content'
+      
+      const categories = getGalleryCategories()
+      let activeCategory = 'all'
+      
+      const tabs = document.createElement('div')
+      tabs.className = 'gallery-tabs'
+      
+      const allTab = document.createElement('button')
+      allTab.className = 'gallery-tab active'
+      allTab.textContent = 'todo'
+      allTab.setAttribute('data-category', 'all')
+      tabs.appendChild(allTab)
+      
+      categories.forEach(cat => {
+        const tab = document.createElement('button')
+        tab.className = 'gallery-tab'
+        tab.textContent = cat.name
+        tab.setAttribute('data-category', cat.id)
+        tabs.appendChild(tab)
+      })
+      
+      galleryContent.appendChild(tabs)
+      
+      const galleryGrid = document.createElement('div')
+      galleryGrid.className = 'gallery-grid'
+      
+      function renderGallery(category) {
+        galleryGrid.innerHTML = ''
+        const images = category === 'all' 
+          ? getAllImages() 
+          : getImagesByCategory(category)
+        
+        if (images.length === 0) {
+          const placeholderCount = category === 'all' ? 6 : 4
+          for (let i = 1; i <= placeholderCount; i++) {
+            const placeholder = document.createElement('div')
+            placeholder.className = 'gallery-item gallery-placeholder'
+            placeholder.innerHTML = `<span>FOTO ${i}</span>`
+            galleryGrid.appendChild(placeholder)
+          }
+        } else {
+          images.forEach(img => {
+            const link = document.createElement('a')
+            link.href = img.src
+            link.className = 'glightbox gallery-item'
+            link.setAttribute('data-gallery', 'paprika-gallery')
+            
+            const imgEl = document.createElement('img')
+            imgEl.src = img.thumb || img.src
+            imgEl.alt = img.alt || 'Foto de Paprika'
+            imgEl.loading = 'lazy'
+            
+            link.appendChild(imgEl)
+            galleryGrid.appendChild(link)
+          })
+        }
+        
+        if (window.lightboxInstance) {
+          window.lightboxInstance.reload()
+        }
+      }
+      
+      tabs.addEventListener('click', (e) => {
+        if (e.target.classList.contains('gallery-tab')) {
+          tabs.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'))
+          e.target.classList.add('active')
+          activeCategory = e.target.getAttribute('data-category')
+          renderGallery(activeCategory)
+        }
+      })
+      
+      function getGalleryCategories() {
+        return [
+          { id: 'fechas', name: 'fechas', folder: 'img/galeria/fechas/' },
+          { id: 'ensayos', name: 'ensayos', folder: 'img/galeria/ensayos/' }
+        ]
+      }
+      
+      function getImagesByCategory(categoryId) {
+        const galleries = {
+          fechas: [
+            // { src: 'img/galeria/fechas/foto1.jpg', alt: 'Fecha 1' },
+          ],
+          ensayos: [
+            // { src: 'img/galeria/ensayos/foto1.jpg', alt: 'Ensayo 1' },
+          ]
+        }
+        return galleries[categoryId] || []
+      }
+      
+      function getAllImages() {
+        const categories = getGalleryCategories()
+        let all = []
+        categories.forEach(cat => {
+          all = all.concat(getImagesByCategory(cat.id))
+        })
+        return all
+      }
+      
+      renderGallery('all')
+      
+      galleryContent.appendChild(galleryGrid)
+      container.appendChild(galleryContent)
+      
+      window.lightboxInstance = GLightbox({
+        selector: '.glightbox',
+        touchNavigation: true,
+        loop: true,
+        autoplayVideos: true,
+        openEffect: 'fade',
+        closeEffect: 'fade',
+        cssEfects: {
+          fade: { in: 'fadeIn', out: 'fadeOut' }
+        }
+      })
+      
+      const footerContainer = document.getElementById('footer-container')
+      const footer = createFooter()
+      footerContainer.appendChild(footer)
+      
+      setTimeout(() => {
+        if (typeof initFooter === 'function') {
+          initFooter()
+        }
+      }, 10)
+    })
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
+
