@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PAPRIKA - Banda de música de Buenos Aires, Argentina">
+  <meta name="theme-color" content="#b50000">
+  <title>PAPRIKA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="assets/fonts/Druk-Wide-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/paprika-title.webp" as="image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="texture-overlay"></div>
+  <div class="container" id="main-container"></div>
+  <div id="footer-container"></div>
+  <script src="components.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('main-container')
+      createHeader(container, true)
+      
+      const footerContainer = document.getElementById('footer-container')
+      const footer = createFooter()
+      footerContainer.appendChild(footer)
+      
+      setTimeout(() => {
+        if (typeof initHomePage === 'function') {
+          initHomePage()
+        }
+        if (typeof initFooter === 'function') {
+          initFooter()
+        }
+      }, 10)
+    })
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>

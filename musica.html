@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Escuchá la música de PAPRIKA en YouTube y SoundCloud">
+  <meta name="theme-color" content="#b50000">
+  <title>Música - PAPRIKA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="assets/fonts/Druk-Wide-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/paprika-title.webp" as="image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="texture-overlay"></div>
+  <div class="container has-content" id="main-container"></div>
+  <div id="footer-container"></div>
+  <script src="components.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('main-container')
+      createHeader(container, false, 'musica')
+      
+      const musicContent = document.createElement('div')
+      musicContent.className = 'music-content'
+      musicContent.innerHTML = `
+        <div class="songs-grid">
+          <div class="song-card">
+            <img src="img/musica.webp" alt="Pa Wacha Ka" class="song-cover" loading="lazy">
+            <div class="song-info">
+              <h2 class="song-title">pa wacha ka</h2>
+              <div class="song-links">
+                <a href="https://youtu.be/Q71-m0hsfFw?list=RDQ71-m0hsfFw" target="_blank" class="song-link youtube-link">
+                  YouTube
+                </a>
+                <a href="https://soundcloud.com/ruido-molesto-370162671/pa-wacha-ka" target="_blank" class="song-link soundcloud-link">
+                  SoundCloud
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+      container.appendChild(musicContent)
+      
+      const footerContainer = document.getElementById('footer-container')
+      const footer = createFooter()
+      footerContainer.appendChild(footer)
+      
+      setTimeout(() => {
+        if (typeof initFooter === 'function') {
+          initFooter()
+        }
+      }, 10)
+    })
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>
+

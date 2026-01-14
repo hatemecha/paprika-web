@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Galería de fotos de PAPRIKA - Ensayos y fechas en vivo">
+  <meta name="theme-color" content="#b50000">
+  <title>Galería - PAPRIKA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" href="assets/fonts/Druk-Wide-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/paprika-title.webp" as="image">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="texture-overlay"></div>
+  <div class="container has-content" id="main-container"></div>
+  <div id="footer-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js" defer></script>
+  <script src="components.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('main-container')
+      createHeader(container, false, 'galeria')
+      
+      const galleryContent = document.createElement('div')
+      galleryContent.className = 'gallery-content'
+      
+      // Estado
+      let currentPath = 'galeria'
+      let history = ['galeria']
+      let historyIndex = 0
+      let viewMode = 'thumbnails'
+      let loadedCount = 0
+      const BATCH_SIZE = 20
+      const isMobile = window.innerWidth <= 768
+      
+      const folders = {
+        galeria: {
+          name: 'Galería PAPRIKA',
+          items: [
+            { type: 'folder', id: 'fechas', name: 'Fechas', icon: 'fa-folder', count: 87 },
+            { type: 'folder', id: 'ensayos', name: 'Ensayos', icon: 'fa-folder', count: 43 }
+          ]
+        },
+        fechas: {
+          name: 'Fechas',
+          parent: 'galeria',
+          images: [4, 5, 6, 7, 8, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93]
+        },
+        ensayos: {
+          name: 'Ensayos',
+          parent: 'galeria',
+          images: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43]
+        }
+      }
+      
+      galleryContent.innerHTML = `
+        <div class="file-explorer">
+          <div class="explorer-titlebar">
+            <div class="explorer-title">
+              <i class="fa-solid fa-folder-open"></i>
+              <span id="window-title">Galería PAPRIKA</span>
+            </div>
+            <div class="window-controls">
+              <div class="window-btn minimize">_</div>
+              <div class="window-btn maximize">□</div>
+              <div class="window-btn close">✕</div>
+            </div>
+          </div>
+          
+          <div class="explorer-toolbar">
+            <button class="toolbar-btn" id="btn-back" disabled>
+              <i class="fa-solid fa-arrow-left"></i>
+              <span>Atrás</span>
+            </button>
+            <button class="toolbar-btn" id="btn-up" disabled>
+              <i class="fa-solid fa-arrow-up"></i>
+              <span>Subir</span>
+            </button>
+            <div class="toolbar-separator"></div>
+            <button class="toolbar-btn" id="btn-icons" disabled>
+              <i class="fa-solid fa-list"></i>
+            </button>
+            <button class="toolbar-btn active" id="btn-thumbnails" disabled>
+              <i class="fa-solid fa-th"></i>
+            </button>
+          </div>
+          
+          <div class="explorer-addressbar">
+            <div class="addressbar-path">
+              <i class="fa-solid fa-folder"></i>
+              <span id="current-path">PAPRIKA > Galería</span>
+            </div>
+          </div>
+          
+          <div class="explorer-body">
+            <div class="explorer-sidebar">
+              <div class="sidebar-section">
+                <div class="sidebar-item" data-folder="galeria">
+                  <i class="fa-solid fa-home"></i>
+                  <span>Inicio</span>
+                </div>
+                <div class="sidebar-item" data-folder="fechas">
+                  <i class="fa-solid fa-calendar"></i>
+                  <span>Fechas</span>
+                </div>
+                <div class="sidebar-item" data-folder="ensayos">
+                  <i class="fa-solid fa-music"></i>
+                  <span>Ensayos</span>
+                </div>
+              </div>
+            </div>
+            <div class="explorer-main" id="explorer-main">
+              <div class="files-grid thumbnails" id="files-container"></div>
+              <div class="load-more-container" id="load-more-container" style="display:none;">
+                <button class="load-more-btn" id="btn-load-more">
+                  <i class="fa-solid fa-plus"></i> Cargar más
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="explorer-statusbar">
+            <span id="status-items">2 carpetas</span>
+          </div>
+        </div>
+      `
+      
+      container.appendChild(galleryContent)
+      
+      const filesContainer = document.getElementById('files-container')
+      const explorerMain = document.getElementById('explorer-main')
+      const windowTitle = document.getElementById('window-title')
+      const currentPathEl = document.getElementById('current-path')
+      const statusItems = document.getElementById('status-items')
+      const loadMoreContainer = document.getElementById('load-more-container')
+      const btnBack = document.getElementById('btn-back')
+      const btnUp = document.getElementById('btn-up')
+      const btnIcons = document.getElementById('btn-icons')
+      const btnThumbnails = document.getElementById('btn-thumbnails')
+      const btnLoadMore = document.getElementById('btn-load-more')
+      
+      // Lazy loading con IntersectionObserver
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target
+            if (img.dataset.src) {
+              img.src = img.dataset.src
+              img.removeAttribute('data-src')
+              imageObserver.unobserve(img)
+            }
+          }
+        })
+      }, { rootMargin: '100px' })
+      
+      function navigate(folderId, addToHistory = true) {
+        currentPath = folderId
+        loadedCount = 0
+        
+        if (addToHistory && history[historyIndex] !== folderId) {
+          history = history.slice(0, historyIndex + 1)
+          history.push(folderId)
+          historyIndex = history.length - 1
+        }
+        
+        updateNavButtons()
+        renderFolder(folderId)
+        updateSidebar()
+        explorerMain.scrollTop = 0
+      }
+      
+      function updateNavButtons() {
+        btnBack.disabled = true
+        btnUp.disabled = true
+      }
+      
+      function updateSidebar() {
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+          item.classList.toggle('active', item.dataset.folder === currentPath)
+        })
+      }
+      
+      function renderFolder(folderId) {
+        const folder = folders[folderId]
+        filesContainer.innerHTML = ''
+        filesContainer.className = viewMode === 'thumbnails' ? 'files-grid thumbnails' : 'files-grid'
+        
+        windowTitle.textContent = folder.name
+        currentPathEl.textContent = folderId === 'galeria' 
+          ? 'PAPRIKA > Galería' 
+          : `PAPRIKA > Galería > ${folder.name}`
+        
+        if (folder.items) {
+          folder.items.forEach(item => {
+            filesContainer.appendChild(createFolderItem(item))
+          })
+          statusItems.textContent = `${folder.items.length} carpetas`
+          loadMoreContainer.style.display = 'none'
+        }
+        
+        if (folder.images) {
+          loadBatch(folderId, folder.images)
+          statusItems.textContent = `${folder.images.length} fotos`
+        }
+        
+        initLightbox()
+      }
+      
+      function loadBatch(folderId, allImages) {
+        const batch = allImages.slice(loadedCount, loadedCount + BATCH_SIZE)
+        
+        batch.forEach(num => {
+          const filename = String(num).padStart(3, '0')
+          filesContainer.appendChild(createImageItem(folderId, filename))
+        })
+        
+        loadedCount += batch.length
+        
+        const hasMore = loadedCount < allImages.length
+        loadMoreContainer.style.display = hasMore ? 'flex' : 'none'
+        
+        if (hasMore) {
+          btnLoadMore.innerHTML = `<i class="fa-solid fa-plus"></i> Cargar más (${allImages.length - loadedCount} restantes)`
+        }
+      }
+      
+      function createFolderItem(item) {
+        const el = document.createElement('div')
+        el.className = 'file-item folder'
+        el.innerHTML = `
+          <div class="folder-icon-wrap">
+            <i class="fa-solid fa-folder file-icon"></i>
+          </div>
+          <span class="file-name">${item.name}</span>
+          <span class="file-count">${item.count} fotos</span>
+        `
+        
+        const openFolder = () => navigate(item.id)
+        el.addEventListener('click', openFolder)
+        el.addEventListener('touchend', (e) => {
+          e.preventDefault()
+          openFolder()
+        })
+        
+        return el
+      }
+      
+      function createImageItem(folderId, filename) {
+        const src = `img/${folderId}/${filename}.webp`
+        const el = document.createElement('a')
+        el.href = src
+        el.className = 'file-item image glightbox'
+        el.setAttribute('data-gallery', 'paprika-gallery')
+        
+        if (viewMode === 'thumbnails') {
+          el.innerHTML = `
+            <div class="file-thumbnail">
+              <img data-src="${src}" alt="${filename}" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ddd' width='100' height='100'/%3E%3C/svg%3E">
+            </div>
+          `
+          const img = el.querySelector('img')
+          imageObserver.observe(img)
+        } else {
+          el.innerHTML = `
+            <i class="fa-solid fa-image file-icon image-icon"></i>
+            <span class="file-name">${filename}.webp</span>
+          `
+        }
+        
+        return el
+      }
+      
+      function initLightbox() {
+        if (window.lightboxInstance) {
+          window.lightboxInstance.destroy()
+        }
+        window.lightboxInstance = GLightbox({
+          selector: '.glightbox',
+          touchNavigation: true,
+          loop: true,
+          openEffect: 'fade',
+          closeEffect: 'fade'
+        })
+      }
+      
+      // Events
+      // Botones Atrás y Subir deshabilitados (solo visuales)
+      
+      // Botones de vista deshabilitados (solo visuales)
+      btnIcons.disabled = true
+      btnThumbnails.disabled = true
+      
+      btnLoadMore.addEventListener('click', () => {
+        const folder = folders[currentPath]
+        if (folder?.images) {
+          loadBatch(currentPath, folder.images)
+          initLightbox()
+        }
+      })
+      
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.addEventListener('click', () => navigate(item.dataset.folder))
+      })
+      
+      updateNavButtons()
+      renderFolder('galeria')
+      
+      const footerContainer = document.getElementById('footer-container')
+      footerContainer.appendChild(createFooter())
+      if (typeof initFooter === 'function') initFooter()
+    })
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>
+
