@@ -96,6 +96,9 @@ const createFooter = () => {
   const footer = document.createElement('footer')
   footer.className = 'footer'
 
+  const footerContent = document.createElement('div')
+  footerContent.className = 'footer-content'
+
   const p = document.createElement('p')
   const yearSpan = document.createElement('span')
   yearSpan.id = 'current-year'
@@ -105,7 +108,32 @@ const createFooter = () => {
   p.appendChild(yearSpan)
   p.appendChild(document.createTextNode(' hatemecha'))
 
-  footer.appendChild(p)
+  footerContent.appendChild(p)
+
+  const socialLinks = document.createElement('div')
+  socialLinks.className = 'social-links'
+
+  const instagramLink = document.createElement('a')
+  instagramLink.href = 'https://www.instagram.com/_p4prik4/'
+  instagramLink.target = '_blank'
+  instagramLink.rel = 'noopener noreferrer'
+  instagramLink.className = 'social-link'
+  instagramLink.setAttribute('aria-label', 'Instagram de PAPRIKA')
+  instagramLink.innerHTML = '<i class=\'fab fa-instagram\'></i>'
+
+  const youtubeLink = document.createElement('a')
+  youtubeLink.href = 'https://www.youtube.com/playlist?list=PL_YuZMoaWvvPZUah5E_D3i9PGZ-VQEAqh'
+  youtubeLink.target = '_blank'
+  youtubeLink.rel = 'noopener noreferrer'
+  youtubeLink.className = 'social-link'
+  youtubeLink.setAttribute('aria-label', 'YouTube de PAPRIKA')
+  youtubeLink.innerHTML = '<i class=\'fab fa-youtube\'></i>'
+
+  socialLinks.appendChild(instagramLink)
+  socialLinks.appendChild(youtubeLink)
+
+  footerContent.appendChild(socialLinks)
+  footer.appendChild(footerContent)
   return footer
 }
 
