@@ -26,21 +26,92 @@
       const nosotrosContent = document.createElement('div')
       nosotrosContent.className = 'nosotros-content'
       
-      const membersGrid = document.createElement('div')
-      membersGrid.className = 'members-grid'
+      const membersSlider = document.createElement('div')
+      membersSlider.className = 'members-slider'
+
+      const membersTrack = document.createElement('div')
+      membersTrack.className = 'members-track'
       
       // ============================================
       // MIEMBROS DE LA BANDA - EDITAR AQUÍ
       // ============================================
       const members = [
         {
-          name: 'NOMBRE',
-          photo: 'img/nosotros/placeholder.jpg',
-          role: 'INSTRUMENTO',
+          name: 'FALLEN',
+          photo: 'img/banda/fallen.png',
+          role: 'CANTANTE LIRICAL',
           number: '01-00-00001',
-          dob: '01/01/1990',
+          dob: '13/01/2026',
+          exp: '13/10/2026',
+          ht: '1.60',
+          wt: '29999',
+          eyes: 'SHINY',
+          sex: 'LADY',
+          issue: '18/02/2002',
+          class: 'ARIA',
+          sign: 'FALLEN'
+        },
+        {
+          name: 'POLLO',
+          photo: 'img/banda/pollo.png',
+          role: 'GTR PISTOL',
+          number: '03-00-00003',
+          dob: '13/01/2026',
+          exp: '13/10/2026',
+          ht: '1.79',
+          wt: '506 (REPETITIVO)',
+          eyes: 'CACA',
+          sex: 'CHICKEN',
+          issue: '11/09/2008',
+          class: 'ITALIAN WHORES',
+          sign: 'FCK POLLIN'
+        },
+        {
+          name: 'ALEJANDRO',
+          photo: 'img/banda/ale.png',
+          role: 'GTR DESTROYER & COROS',
+          number: '02-00-00002',
+          dob: '13/01/2026',
+          exp: '13/10/2026',
           ht: '1.70',
-          sign: 'Firma'
+          wt: '50',
+          eyes: 'CRIS BROWN',
+          sex: 'LADYBOY',
+          issue: '18/05/2009',
+          class: 'NORTHWEST',
+          sign: 'ALE PICANTE'
+        },
+        {
+          name: 'CIRO',
+          photo: 'img/banda/ciro.png',
+          role: 'BASS CHADER',
+          number: '06-00-00006',
+          dob: '13/01/2026',
+          exp: '13/10/2026',
+          ht: '1.75',
+          wt: 'U+221E',
+          eyes: 'BLCK',
+          sex: 'MACHO ALFA',
+          issue: '17/10/2006',
+          class: 'LA LOMA NIGG3R',
+          restr: 'YE-YE',
+          sign: 'DOSED&CONFUSED'
+        },
+        {
+          name: 'LEA',
+          photo: 'img/banda/lean.png',
+          role: 'DRUM KIT',
+          number: '08-00-00008',
+          dob: '13/01/2026',
+          exp: '13/10/2026',
+          ht: '1.71',
+          wt: 'DESCONOCIDO MUCHA AURA',
+          eyes: 'ALF HTL',
+          sex: 'SPIDERMAN',
+          issue: '07/05/2003',
+          class: 'SHOOTER',
+          restr: 'YE-YE',
+          sign: 'LEAN DRINK'
         },
         // Agregar más miembros copiando el bloque de arriba:
         // {
@@ -57,7 +128,10 @@
       
       members.forEach(member => {
         const card = createMemberCard(member)
-        membersGrid.appendChild(card)
+        const slide = document.createElement('div')
+        slide.className = 'member-slide'
+        slide.appendChild(card)
+        membersTrack.appendChild(slide)
       })
       
       function createMemberCard(member) {
@@ -72,7 +146,7 @@
             <div class="license-barcode"></div>
             <div class="license-bottom-info">
               <div class="license-name">${member.name}</div>
-              <div class="license-address">${member.address || 'BUENOS AIRES, ARG'}</div>
+              <div class="license-address">${member.address || 'BAHIA BLANCA, BS AS, ARG'}</div>
             </div>
           </div>
           <div class="license-right">
@@ -93,9 +167,9 @@
                 </div>
                 <div class="rainbow-row bottom">
                   <div><span class="label">HT</span><br><span class="value">${member.ht}</span></div>
-                  <div><span class="label">WT</span><br><span class="value">${member.wt || '150'}</span></div>
+                  <div><span class="label">WT (NIVEL DE MOMAZOS)</span><br><span class="value">${member.wt || '150'}</span></div>
                   <div><span class="label">ROLE</span><br><span class="value">${member.role}</span></div>
-                  <div><span class="label">EYES</span><br><span class="value">BLK</span></div>
+                  <div><span class="label">EYES</span><br><span class="value">${member.eyes || 'BLK'}</span></div>
                   <div><span class="label">SEX</span><br><span class="value">${member.sex || 'M'}</span></div>
                 </div>
               </div>
@@ -103,7 +177,7 @@
             <div class="license-meta-row">
               <div><span class="label">ISSUE DATE</span><br><span class="value">${member.issue || '01/01/24'}</span></div>
               <div><span class="label">CLASS</span><br><span class="value">${member.class || '3'}</span></div>
-              <div><span class="label">RESTR</span><br><span class="value">NONE</span></div>
+              <div><span class="label">RESTR</span><br><span class="value">${member.restr || 'NONE'}</span></div>
               <div><span class="label">ENDORSE</span><br><span class="value">PAPK</span></div>
             </div>
             <div class="license-sign-container">
@@ -114,8 +188,51 @@
         return card
       }
       
-      nosotrosContent.appendChild(membersGrid)
+      const prevButton = document.createElement('button')
+      prevButton.className = 'slider-btn prev'
+      prevButton.setAttribute('aria-label', 'Anterior')
+      prevButton.innerHTML = '<i class="fa-solid fa-chevron-left"></i>'
+
+      const nextButton = document.createElement('button')
+      nextButton.className = 'slider-btn next'
+      nextButton.setAttribute('aria-label', 'Siguiente')
+      nextButton.innerHTML = '<i class="fa-solid fa-chevron-right"></i>'
+
+      membersSlider.appendChild(prevButton)
+      membersSlider.appendChild(membersTrack)
+      membersSlider.appendChild(nextButton)
+      nosotrosContent.appendChild(membersSlider)
       container.appendChild(nosotrosContent)
+
+      let currentIndex = 0
+
+      const isMobileStack = () => window.matchMedia('(max-width: 600px)').matches
+
+      const updateSlider = () => {
+        const slides = Array.from(membersTrack.children)
+        if (!slides.length) return
+        if (isMobileStack()) {
+          membersTrack.style.transform = 'none'
+          return
+        }
+        const slide = slides[currentIndex]
+        const sliderWidth = membersSlider.clientWidth
+        const slideCenter = slide.offsetLeft + slide.offsetWidth / 2
+        const targetCenter = sliderWidth / 2
+        const translateX = targetCenter - slideCenter
+        membersTrack.style.transform = `translateX(${translateX}px)`
+      }
+
+      const goTo = (index) => {
+        const total = membersTrack.children.length
+        currentIndex = (index + total) % total
+        updateSlider()
+      }
+
+      prevButton.addEventListener('click', () => goTo(currentIndex - 1))
+      nextButton.addEventListener('click', () => goTo(currentIndex + 1))
+      window.addEventListener('resize', updateSlider)
+      setTimeout(updateSlider, 0)
       
       const footerContainer = document.getElementById('footer-container')
       const footer = createFooter()
