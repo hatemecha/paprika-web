@@ -104,9 +104,32 @@ const createFooter = () => {
   yearSpan.id = 'current-year'
   yearSpan.textContent = new Date().getFullYear()
 
-  p.textContent = 'Paprika Spicy © '
-  p.appendChild(yearSpan)
-  p.appendChild(document.createTextNode(' hatemecha'))
+    p.className = 'footer-credit'
+    const bandSpan = document.createElement('span')
+    bandSpan.className = 'footer-band'
+    bandSpan.textContent = 'Paprika Spicy'
+    const authorLink = document.createElement('a')
+    authorLink.href = 'https://www.instagram.com/hatemecha/'
+    authorLink.target = '_blank'
+    authorLink.rel = 'noopener noreferrer'
+    authorLink.className = 'footer-author'
+    authorLink.textContent = 'hatemecha'
+    const sepSpan = document.createElement('span')
+    sepSpan.className = 'footer-sep'
+    sepSpan.textContent = '©'
+    const crossSpan = document.createElement('span')
+    crossSpan.className = 'footer-cross'
+    crossSpan.textContent = 'x'
+
+    p.appendChild(bandSpan)
+    p.appendChild(document.createTextNode(' '))
+    p.appendChild(crossSpan)
+    p.appendChild(document.createTextNode(' '))
+    p.appendChild(authorLink)
+    p.appendChild(document.createTextNode(' '))
+    p.appendChild(sepSpan)
+    p.appendChild(document.createTextNode(' '))
+    p.appendChild(yearSpan)
 
   footerContent.appendChild(p)
 
@@ -121,16 +144,25 @@ const createFooter = () => {
   instagramLink.setAttribute('aria-label', 'Instagram de PAPRIKA')
   instagramLink.innerHTML = '<i class=\'fab fa-instagram\'></i>'
 
-  const youtubeLink = document.createElement('a')
-  youtubeLink.href = 'https://www.youtube.com/playlist?list=PL_YuZMoaWvvPZUah5E_D3i9PGZ-VQEAqh'
-  youtubeLink.target = '_blank'
-  youtubeLink.rel = 'noopener noreferrer'
-  youtubeLink.className = 'social-link'
-  youtubeLink.setAttribute('aria-label', 'YouTube de PAPRIKA')
-  youtubeLink.innerHTML = '<i class=\'fab fa-youtube\'></i>'
+    const youtubeLink = document.createElement('a')
+    youtubeLink.href = 'https://www.youtube.com/playlist?list=PL_YuZMoaWvvPZUah5E_D3i9PGZ-VQEAqh'
+    youtubeLink.target = '_blank'
+    youtubeLink.rel = 'noopener noreferrer'
+    youtubeLink.className = 'social-link'
+    youtubeLink.setAttribute('aria-label', 'YouTube de PAPRIKA')
+    youtubeLink.innerHTML = '<i class=\'fab fa-youtube\'></i>'
 
-  socialLinks.appendChild(instagramLink)
-  socialLinks.appendChild(youtubeLink)
+    const spotifyLink = document.createElement('a')
+    spotifyLink.href = 'https://open.spotify.com/intl-es/artist/63oydwT8lSZtuA7K41zBeI?si=qGFhkeXlSmW7z0NEKuzoRQ'
+    spotifyLink.target = '_blank'
+    spotifyLink.rel = 'noopener noreferrer'
+    spotifyLink.className = 'social-link'
+    spotifyLink.setAttribute('aria-label', 'Spotify de PAPRIKA')
+    spotifyLink.innerHTML = '<i class=\'fab fa-spotify\'></i>'
+
+    socialLinks.appendChild(instagramLink)
+    socialLinks.appendChild(youtubeLink)
+    socialLinks.appendChild(spotifyLink)
 
   footerContent.appendChild(socialLinks)
   footer.appendChild(footerContent)

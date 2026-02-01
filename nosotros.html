@@ -49,7 +49,8 @@
           sex: 'LADY',
           issue: '18/02/2002',
           class: 'ARIA',
-          sign: 'FALLEN'
+          sign: 'FALLEN',
+          signImage: 'img/banda/lulufirma.png'
         },
         {
           name: 'POLLO',
@@ -64,7 +65,8 @@
           sex: 'CHICKEN',
           issue: '11/09/2008',
           class: 'ITALIAN WHORES',
-          sign: 'FCK POLLIN'
+          sign: 'FCK POLLIN',
+          signImage: 'img/banda/pollofirma.png'
         },
         {
           name: 'ALEJANDRO',
@@ -79,7 +81,8 @@
           sex: 'LADYBOY',
           issue: '18/05/2009',
           class: 'NORTHWEST',
-          sign: 'ALE PICANTE'
+          sign: 'ALE PICANTE',
+          signImage: 'img/banda/alefirma.png'
         },
         {
           name: 'CIRO',
@@ -95,7 +98,8 @@
           issue: '17/10/2006',
           class: 'LA LOMA NIGG3R',
           restr: 'YE-YE',
-          sign: 'DOSED&CONFUSED'
+          sign: 'DOSED&CONFUSED',
+          signImage: 'img/banda/cirofirma.png'
         },
         {
           name: 'LEA',
@@ -111,7 +115,8 @@
           issue: '07/05/2003',
           class: 'SHOOTER',
           restr: 'YE-YE',
-          sign: 'LEAN DRINK'
+          sign: 'LEAN DRINK',
+          signImage: 'img/banda/leanfirma.png'
         },
         // Agregar más miembros copiando el bloque de arriba:
         // {
@@ -181,7 +186,11 @@
               <div><span class="label">ENDORSE</span><br><span class="value">PAPK</span></div>
             </div>
             <div class="license-sign-container">
-              <div class="license-sign">${member.sign}</div>
+              ${
+                member.signImage
+                  ? `<img class="license-sign-image" src="${member.signImage}" alt="Firma de ${member.name}">`
+                  : `<div class="license-sign">${member.sign}</div>`
+              }
             </div>
           </div>
         `

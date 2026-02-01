@@ -417,6 +417,9 @@ body::after {
   font-family: 'Courier New', Courier, monospace;
   font-size: 12px;
   color: #000000;
+  background: transparent;
+  backdrop-filter: none;
+  border-top: none;
 }
 
 .footer-content {
@@ -429,6 +432,43 @@ body::after {
 .footer p {
   margin: 0;
   letter-spacing: 1px;
+}
+
+.footer-credit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: 'Druk Wide Bold', sans-serif;
+  text-transform: uppercase;
+}
+
+.footer-band {
+  color: #000000;
+  letter-spacing: 2px;
+}
+
+.footer-sep {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+}
+
+.footer-cross {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 12px;
+}
+
+.footer-author {
+  color: rgba(0, 0, 0, 0.75);
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.footer-author:hover {
+  opacity: 0.7;
 }
 
 .social-links {
@@ -449,7 +489,6 @@ body::after {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
   line-height: 1;
 }
 
@@ -596,11 +635,25 @@ body::after {
   padding: 0 20px 100px;
   z-index: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.spotify-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.spotify-container iframe {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
 }
 
 .songs-grid {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
   gap: 40px;
   justify-content: center;
@@ -683,6 +736,7 @@ body::after {
   .music-content {
     margin-top: 30px;
     padding: 0 15px 80px;
+    gap: 30px;
   }
 
   .songs-grid {
@@ -704,12 +758,21 @@ body::after {
     font-size: 14px;
     padding: 10px 20px;
   }
+
+  .spotify-container {
+    max-width: 100%;
+  }
+
+  .spotify-container iframe {
+    height: 352px;
+  }
 }
 
 @media (max-width: 480px) {
   .music-content {
     margin-top: 20px;
     padding: 0 10px 70px;
+    gap: 25px;
   }
 
   .song-card {
@@ -729,6 +792,14 @@ body::after {
     font-size: 12px;
     padding: 8px 16px;
     letter-spacing: 1px;
+  }
+
+  .spotify-container {
+    max-width: 100%;
+  }
+
+  .spotify-container iframe {
+    height: 300px;
   }
 }
 
@@ -1243,6 +1314,8 @@ body::after {
   display: flex;
   flex-direction: column;
   position: relative;
+  min-height: 0;
+  overflow: visible;
 }
 
 .license-header {
@@ -1273,10 +1346,11 @@ body::after {
 }
 
 .license-number-row {
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   display: flex;
   align-items: baseline;
   gap: 5px;
+  flex-shrink: 0;
 }
 
 .license-number-row .label {
@@ -1299,6 +1373,7 @@ body::after {
   margin: 6px -15px 6px -15px; /* Extend to both edges */
   height: 112px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .license-rainbow {
@@ -1381,6 +1456,7 @@ body::after {
   padding-right: 20px;
   flex-wrap: wrap;
   row-gap: 6px;
+  margin-bottom: 8px;
 }
 
 .license-meta-row > div {
@@ -1402,13 +1478,29 @@ body::after {
 .license-sign-container {
   margin-top: auto;
   text-align: center;
+  padding-top: 10px;
   padding-bottom: 5px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .license-sign {
   font-family: 'Brush Script MT', cursive;
   font-size: 24px;
   color: black;
+  line-height: 1;
+}
+
+.license-sign-image {
+  max-width: 350px;
+  max-height: 65px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
 }
 
 .slider-btn {
@@ -1570,19 +1662,20 @@ body::after {
   }
 
   .license-rainbow-wrapper {
-    margin: 5px -12px 5px -12px;
-    height: 95px;
+    margin: 2px -12px 2px -12px;
+    height: 82px;
+    flex-shrink: 0;
   }
 
   .license-rainbow {
-    top: -5px;
+    top: -2px;
     left: -25px;
     width: calc(100% + 50px);
-    height: calc(100% + 15px);
+    height: calc(100% + 10px);
   }
 
   .license-rainbow-content {
-    padding: 8px 12px 0 8px;
+    padding: 6px 12px 0 8px;
   }
 
   .rainbow-row {
@@ -1617,10 +1710,19 @@ body::after {
     min-width: 60px;
   }
 
+  .license-header {
+    margin-bottom: 0px;
+  }
+
+  .license-number-row {
+    margin-bottom: 1px;
+  }
+
   .license-meta-row {
-    margin-top: 4px;
+    margin-top: 1px;
     padding-right: 15px;
-    row-gap: 5px;
+    row-gap: 2px;
+    margin-bottom: 1px;
   }
 
   .license-meta-row > div {
@@ -1640,7 +1742,15 @@ body::after {
   }
 
   .license-sign-container {
-    padding-bottom: 4px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    min-height: 30px;
+    margin-top: 0;
+  }
+
+  .license-sign-image {
+    max-width: 150px;
+    max-height: 28px;
   }
 }
 
@@ -1675,7 +1785,7 @@ body::after {
   }
 
   .license-right {
-    padding: 7px 10px;
+    padding: 5px 10px;
   }
 
   .license-title {
@@ -1686,8 +1796,12 @@ body::after {
     font-size: 8px;
   }
 
+  .license-header {
+    margin-bottom: 1px;
+  }
+
   .license-number-row {
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
 
   .license-number-row .label {
@@ -1699,19 +1813,20 @@ body::after {
   }
 
   .license-rainbow-wrapper {
-    margin: 4px -10px 4px -10px;
-    height: 85px;
+    margin: 2px -10px 2px -10px;
+    height: 70px;
+    flex-shrink: 0;
   }
 
   .license-rainbow {
-    top: -4px;
+    top: -2px;
     left: -20px;
     width: calc(100% + 40px);
-    height: calc(100% + 12px);
+    height: calc(100% + 8px);
   }
 
   .license-rainbow-content {
-    padding: 7px 10px 0 7px;
+    padding: 5px 10px 0 7px;
   }
 
   .rainbow-row {
@@ -1719,11 +1834,11 @@ body::after {
   }
 
   .rainbow-row.top {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
 
   .rainbow-row.bottom {
-    row-gap: 5px;
+    row-gap: 3px;
   }
 
   .rainbow-row .label-bold {
@@ -1746,10 +1861,19 @@ body::after {
     min-width: 50px;
   }
 
+  .license-header {
+    margin-bottom: 1px;
+  }
+
+  .license-number-row {
+    margin-bottom: 2px;
+  }
+
   .license-meta-row {
-    margin-top: 3px;
+    margin-top: 1px;
     padding-right: 12px;
-    row-gap: 4px;
+    row-gap: 2px;
+    margin-bottom: 2px;
   }
 
   .license-meta-row > div {
@@ -1769,7 +1893,15 @@ body::after {
   }
 
   .license-sign-container {
-    padding-bottom: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    min-height: 28px;
+    margin-top: 0;
+  }
+
+  .license-sign-image {
+    max-width: 140px;
+    max-height: 24px;
   }
 }
 
@@ -1786,12 +1918,25 @@ body::after {
     font-size: 7px;
   }
 
+  .license-sign-image {
+    max-width: 120px;
+    max-height: 22px;
+  }
+
+  .license-sign-container {
+    min-height: 24px;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    margin-top: 0;
+  }
+
   .license-number-row .value.number {
     font-size: 13px;
   }
 
   .license-rainbow-wrapper {
-    height: 80px;
+    height: 72px;
+    flex-shrink: 0;
   }
 
   .license-name {
