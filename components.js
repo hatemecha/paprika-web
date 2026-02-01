@@ -44,7 +44,7 @@ const createHeader = (container, isHome = false, activePage = '') => {
     const pages = [
       { name: 'musica', href: 'musica.html', image: 'img/musica.webp' },
       { name: 'galeria', href: 'galeria.html', image: 'img/galeria.webp' },
-      { name: 'recitales', href: '#', image: 'img/recitales.webp' },
+      { name: 'recitales', href: 'recitales.html', image: 'img/recitales.webp' },
       { name: 'nosotros', href: 'nosotros.html', image: 'img/nosotros.webp' }
     ]
 
@@ -66,7 +66,7 @@ const createHeader = (container, isHome = false, activePage = '') => {
     const pages = [
       { name: 'musica', href: 'musica.html' },
       { name: 'galeria', href: 'galeria.html' },
-      { name: 'recitales', href: 'index.html' },
+      { name: 'recitales', href: 'recitales.html' },
       { name: 'nosotros', href: 'nosotros.html' }
     ]
 

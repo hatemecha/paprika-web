@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Próximos recitales de PAPRIKA - Información de fechas, entradas y ubicación">
+  <meta name="theme-color" content="#b50000">
+  <title>Recitales - PAPRIKA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="assets/fonts/Druk-Wide-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/paprika-title.webp" as="image">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="texture-overlay"></div>
+  <div class="container has-content" id="main-container"></div>
+  <div id="footer-container"></div>
+  <script src="components.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('main-container')
+      createHeader(container, false, 'recitales')
+      
+      const recitalesContent = document.createElement('div')
+      recitalesContent.className = 'recitales-content'
+      
+      // ============================================
+      // INFORMACIÓN DEL RECITAL - EDITAR AQUÍ
+      // ============================================
+      const recitalData = {
+        // Si hay recital programado, completar estos datos:
+        // flyer: 'img/recitales/flyer.webp',
+        // fecha: 'Sábado 15 de Marzo',
+        // fechaCompleta: '2024-03-15', // Formato: YYYY-MM-DD (para comparar si ya pasó)
+        // horario: '22:00 hs',
+        // direccion: 'Nombre del lugar, Dirección 1234, CABA',
+        // entradas: '$5000 anticipada / $6000 en puerta',
+        
+        // Si no hay recital, dejar todo vacío o null:
+        flyer: 'flyertest.jpg',
+        fecha: '1 de Noviembre',
+        fechaCompleta: '2024-11-01',
+        horario: '21:00 hs',
+        direccion: 'Casa Marx, Berutti 902',
+        entradas: 'Entrada Gratis'
+      }
+      // ============================================
+      
+      const checkDate = (fechaCompleta) => {
+        if (!fechaCompleta) return true
+        const hoy = new Date()
+        hoy.setHours(0, 0, 0, 0)
+        const fechaRecital = new Date(fechaCompleta)
+        fechaRecital.setHours(0, 0, 0, 0)
+        return fechaRecital >= hoy
+      }
+      
+      const hasRecital = recitalData.flyer && recitalData.fecha && checkDate(recitalData.fechaCompleta)
+      
+      if (hasRecital) {
+        recitalesContent.innerHTML = `
+          <div class="recital-card">
+            <div class="recital-flyer">
+              <img src="${recitalData.flyer}" alt="Flyer del recital" loading="lazy">
+            </div>
+            <div class="recital-info">
+              <div class="info-item">
+                <i class="fas fa-calendar-alt"></i>
+                <div class="info-content">
+                  <span class="info-label">Fecha</span>
+                  <span class="info-value">${recitalData.fecha}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <div class="info-content">
+                  <span class="info-label">Horario</span>
+                  <span class="info-value">${recitalData.horario}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="info-content">
+                  <span class="info-label">Dirección</span>
+                  <span class="info-value">${recitalData.direccion}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-ticket-alt"></i>
+                <div class="info-content">
+                  <span class="info-label">Entradas</span>
+                  <span class="info-value">${recitalData.entradas}</span>
+                </div>
+              </div>
+              <a href="https://www.instagram.com/_p4prik4/" target="_blank" rel="noopener noreferrer" class="ticket-button" title="Abrir Instagram para escribir: hola, me gustaria una anticipada!">
+                <i class="fab fa-instagram"></i>
+                <span>Pedir entrada anticipada</span>
+              </a>
+            </div>
+          </div>
+        `
+      } else {
+        recitalesContent.innerHTML = `
+          <div class="recital-card coming-soon">
+            <div class="coming-soon-content">
+              <i class="fas fa-calendar-check"></i>
+              <h2 class="coming-soon-title">Próximamente</h2>
+              <p class="coming-soon-text">Estamos preparando nuevos recitales. ¡Seguinos en nuestras redes para enterarte primero!</p>
+              <div class="coming-soon-social">
+                <a href="https://www.instagram.com/_p4prik4/" target="_blank" rel="noopener noreferrer" class="social-link-coming">
+                  <i class="fab fa-instagram"></i>
+                  <span>Instagram</span>
+                </a>
+                <a href="https://www.youtube.com/playlist?list=PL_YuZMoaWvvPZUah5E_D3i9PGZ-VQEAqh" target="_blank" rel="noopener noreferrer" class="social-link-coming">
+                  <i class="fab fa-youtube"></i>
+                  <span>YouTube</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        `
+      }
+      
+      container.appendChild(recitalesContent)
+      
+      const footerContainer = document.getElementById('footer-container')
+      const footer = createFooter()
+      footerContainer.appendChild(footer)
+      
+      setTimeout(() => {
+        if (typeof initFooter === 'function') {
+          initFooter()
+        }
+      }, 10)
+      
+    })
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>
