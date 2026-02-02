@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Extras y contenidos especiales de PAPRIKA"
+        />
+        <meta name="theme-color" content="#b50000" />
+        <link rel="icon" type="image/png" href="img/paprikaperfeccionada.png" />
+        <title>Extras - PAPRIKA</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="preload"
+            href="assets/fonts/Druk-Wide-Bold.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <link rel="preload" href="assets/paprika-title.webp" as="image" />
+        <link rel="stylesheet" href="styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+    </head>
+    <body class="extras-page">
+        <div class="texture-overlay"></div>
+        <div class="container has-content" id="main-container"></div>
+        <div id="footer-container"></div>
+        <script src="components.js" defer></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const container = document.getElementById("main-container");
+                createHeader(container, false, "extras");
+
+                const links = window.SITE_LINKS || {};
+                const paprikaLinks = links.paprika || {};
+                const ruidoLinks = links.ruidoMolesto || {};
+                const hatemechaLinks = links.hatemecha || {};
+                const contactEmail = links.contactEmail || "gmrgabo@gmail.com";
+
+                const extrasContent = document.createElement("div");
+                extrasContent.className = "extras-content";
+                extrasContent.innerHTML = `
+        <section class="extras-card">
+          <div class="extras-logo">
+            <img src="img/paprikaperfeccionada.png" alt="Logo de Paprika" loading="lazy">
+          </div>
+          <div class="extras-text">
+            <h2 class="extras-title">Paprika</h2>
+            <p class="extras-bio">
+              Banda creada por amigos a mediados de septiembre de 2023, y formalizando con el primer concierto en diciembre de ese ano.
+              Paprika busca traer un sonido distinto, sin estructura y variado; haciendo desde el Punk-Rock mas simple hasta Shoegaze.
+              El 29 de diciembre de 2025 sacaron "Pa Wacha Ka", su primer sencillo y adelanto del proximo album.
+              Paprika, de Bahia para todo el mundo.
+            </p>
+            <div class="extras-links">
+              <a href="${paprikaLinks.instagram || "#"}" target="_blank" rel="noopener noreferrer" class="extras-link">
+                <i class="fab fa-instagram"></i> Instagram
+              </a>
+              <a href="${paprikaLinks.youtube || "#"}" target="_blank" rel="noopener noreferrer" class="extras-link">
+                <i class="fab fa-youtube"></i> YouTube
+              </a>
+              <a href="${paprikaLinks.spotify || "#"}" target="_blank" rel="noopener noreferrer" class="extras-link">
+                <i class="fab fa-spotify"></i> Spotify
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="extras-card reverse">
+          <div class="extras-logo">
+            <img src="img/ruidomolestologo.png" alt="Logo de Ruido Molesto" loading="lazy">
+          </div>
+          <div class="extras-text">
+            <h2 class="extras-title">Ruido Molesto</h2>
+            <p class="extras-bio">
+              Paprika esta firmado por el sello discografico Ruido Molesto.
+            </p>
+            <div class="extras-links">
+              <a href="${ruidoLinks.instagram || "#"}" target="_blank" rel="noopener noreferrer" class="extras-link">
+                <i class="fab fa-instagram"></i> @ruidomolesto.sello
+              </a>
+              <a href="${ruidoLinks.site || "#"}" target="_blank" rel="noopener noreferrer" class="extras-link">
+                <i class="fa-solid fa-link"></i> ruidomolesto.online
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="extras-card">
+          <div class="extras-logo">
+            <img src="img/hatemechalogo.png" alt="Logo de hatemecha" loading="lazy">
+          </div>
+          <div class="extras-text">
+            <h2 class="extras-title">Creditos</h2>
+            <p class="extras-bio">
+              Este sitio fue creado por Alex Romero aka hatemecha. Para errores o sugerencias, escribir a
+              <a href="mailto:${contactEmail}" class="extras-inline-link">${contactEmail}</a>.
+            </p>
+            <div class="extras-links">
+              <a href="${hatemechaLinks.site || "#"}" target="_blank" rel="noopener noreferrer" class="extras-link">
+                <i class="fa-solid fa-link"></i> porqueodiasamecha.lol
+              </a>
+              <a href="${hatemechaLinks.instagram || "#"}" target="_blank" rel="noopener noreferrer" class="extras-link">
+                <i class="fab fa-instagram"></i> @hatemecha
+              </a>
+            </div>
+          </div>
+        </section>
+      `;
+                container.appendChild(extrasContent);
+
+                const footerContainer =
+                    document.getElementById("footer-container");
+                const footer = createFooter();
+                footerContainer.appendChild(footer);
+
+                setTimeout(() => {
+                    if (typeof initFooter === "function") {
+                        initFooter();
+                    }
+                }, 10);
+            });
+        </script>
+        <script src="script.js" defer></script>
+    </body>
+</html>

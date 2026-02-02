@@ -1,3 +1,24 @@
+const SITE_LINKS = {
+  paprika: {
+    instagram: "https://www.instagram.com/_p4prik4/",
+    youtube:
+      "https://www.youtube.com/playlist?list=PL_YuZMoaWvvPZUah5E_D3i9PGZ-VQEAqh",
+    spotify:
+      "https://open.spotify.com/intl-es/artist/63oydwT8lSZtuA7K41zBeI?si=qGFhkeXlSmW7z0NEKuzoRQ",
+  },
+  ruidoMolesto: {
+    instagram: "https://www.instagram.com/ruidomolesto.sello/",
+    site: "https://ruidomolesto.online",
+  },
+  hatemecha: {
+    instagram: "https://www.instagram.com/hatemecha/",
+    site: "https://porqueodiasamecha.lol",
+  },
+  contactEmail: "gmrgabo@gmail.com",
+};
+
+window.SITE_LINKS = SITE_LINKS;
+
 const createHeader = (container, isHome = false, activePage = "") => {
   const titleLink = document.createElement("a");
   titleLink.href = isHome ? "assets/cv.pdf" : "index.html";
@@ -56,6 +77,11 @@ const createHeader = (container, isHome = false, activePage = "") => {
         image: "img/recitales.webp",
       },
       { name: "nosotros", href: "nosotros.html", image: "img/nosotros.webp" },
+      {
+        name: "extras",
+        href: "extras.html",
+        image: "img/paprikaperfeccionada.png",
+      },
     ];
 
     pages.forEach((page) => {
@@ -78,6 +104,7 @@ const createHeader = (container, isHome = false, activePage = "") => {
       { name: "galeria", href: "galeria.html" },
       { name: "recitales", href: "recitales.html" },
       { name: "nosotros", href: "nosotros.html" },
+      { name: "extras", href: "extras.html" },
     ];
 
     pages.forEach((page, index) => {
@@ -119,7 +146,7 @@ const createFooter = () => {
   bandSpan.className = "footer-band";
   bandSpan.textContent = "Paprika Spicy";
   const authorLink = document.createElement("a");
-  authorLink.href = "https://www.instagram.com/hatemecha/";
+  authorLink.href = SITE_LINKS.hatemecha.instagram;
   authorLink.target = "_blank";
   authorLink.rel = "noopener noreferrer";
   authorLink.className = "footer-author";
@@ -147,7 +174,7 @@ const createFooter = () => {
   socialLinks.className = "social-links";
 
   const instagramLink = document.createElement("a");
-  instagramLink.href = "https://www.instagram.com/_p4prik4/";
+  instagramLink.href = SITE_LINKS.paprika.instagram;
   instagramLink.target = "_blank";
   instagramLink.rel = "noopener noreferrer";
   instagramLink.className = "social-link";
@@ -155,8 +182,7 @@ const createFooter = () => {
   instagramLink.innerHTML = "<i class='fab fa-instagram'></i>";
 
   const youtubeLink = document.createElement("a");
-  youtubeLink.href =
-    "https://www.youtube.com/playlist?list=PL_YuZMoaWvvPZUah5E_D3i9PGZ-VQEAqh";
+  youtubeLink.href = SITE_LINKS.paprika.youtube;
   youtubeLink.target = "_blank";
   youtubeLink.rel = "noopener noreferrer";
   youtubeLink.className = "social-link";
@@ -164,8 +190,7 @@ const createFooter = () => {
   youtubeLink.innerHTML = "<i class='fab fa-youtube'></i>";
 
   const spotifyLink = document.createElement("a");
-  spotifyLink.href =
-    "https://open.spotify.com/intl-es/artist/63oydwT8lSZtuA7K41zBeI?si=qGFhkeXlSmW7z0NEKuzoRQ";
+  spotifyLink.href = SITE_LINKS.paprika.spotify;
   spotifyLink.target = "_blank";
   spotifyLink.rel = "noopener noreferrer";
   spotifyLink.className = "social-link";
@@ -180,3 +205,113 @@ const createFooter = () => {
   footer.appendChild(footerContent);
   return footer;
 };
+
+const initPacman = () => {
+  if (document.querySelector(".pacman-modal")) return;
+
+  const pacmanScriptPath = "assets/pacman-game.js";
+  let pacmanScriptPromise = null;
+
+  const modal = document.createElement("div");
+  modal.className = "pacman-modal";
+  modal.innerHTML = `
+    <div class="pacman-panel" role="dialog" aria-modal="true" aria-label="Pacman">
+      <button class="pacman-close" type="button" aria-label="Cerrar Pacman">
+        <span aria-hidden="true">x</span>
+      </button>
+      <div class="pacman-header">
+        <div class="pacman-title">:v</div>
+        <div class="pacman-subtitle">
+          Flechas para mover · P pausa · S mute
+        </div>
+      </div>
+      <div class="pacman-game-shell">
+        <div id="pacman-game" class="pacman-game"></div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  const closeButton = modal.querySelector(".pacman-close");
+
+  const loadPacmanGame = () => {
+    if (window.initPacmanGame) {
+      return Promise.resolve();
+    }
+    if (pacmanScriptPromise) {
+      return pacmanScriptPromise;
+    }
+    pacmanScriptPromise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = pacmanScriptPath;
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = reject;
+      document.body.appendChild(script);
+    });
+    return pacmanScriptPromise;
+  };
+
+  const openModal = () => {
+    modal.classList.add("is-open");
+    window.PACMAN_ACTIVE = true;
+    loadPacmanGame().then(() => {
+      const wrapper = modal.querySelector("#pacman-game");
+      if (wrapper && typeof window.initPacmanGame === "function") {
+        window.initPacmanGame(wrapper);
+      }
+    });
+  };
+
+  const closeModal = () => {
+    modal.classList.remove("is-open");
+    window.PACMAN_ACTIVE = false;
+    if (typeof window.pausePacmanAudio === "function") {
+      window.pausePacmanAudio();
+    }
+    document.querySelectorAll("audio").forEach((audio) => {
+      if (audio && audio.src && (audio.src.includes("daleharvey/pacman") || audio.src.includes("pacman"))) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+  };
+
+  closeButton.addEventListener("click", closeModal);
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) {
+      closeModal();
+    }
+  });
+
+  const attachPacmanTrigger = () => {
+    const img = document.querySelector('img[src*="paprikaperfeccionada"]');
+    if (img) {
+      img.addEventListener("dblclick", openModal);
+      img.classList.add("pacman-trigger");
+    }
+  };
+  setTimeout(attachPacmanTrigger, 0);
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.location.protocol === "file:") {
+    document
+      .querySelectorAll('link[rel="preload"][as="font"]')
+      .forEach((link) => link.remove());
+  }
+  const isExtrasPage =
+    document.body.classList.contains("extras-page") ||
+    /extras\.html$/i.test(window.location.pathname) ||
+    window.location.pathname.endsWith("extras");
+  if (isExtrasPage) {
+    initPacman();
+  }
+});
