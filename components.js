@@ -222,7 +222,7 @@ const initPacman = () => {
       <div class="pacman-header">
         <div class="pacman-title">:v</div>
         <div class="pacman-subtitle">
-          Flechas para mover · P pausa · S mute
+          Flechas o WASD · P pausa · M mute
         </div>
       </div>
       <div class="pacman-game-shell">

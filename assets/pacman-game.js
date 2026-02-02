@@ -292,6 +292,10 @@
     keyMap[KEY.ARROW_UP] = UP;
     keyMap[KEY.ARROW_RIGHT] = RIGHT;
     keyMap[KEY.ARROW_DOWN] = DOWN;
+    keyMap[KEY.W] = UP;
+    keyMap[KEY.A] = LEFT;
+    keyMap[KEY.S] = DOWN;
+    keyMap[KEY.D] = RIGHT;
 
     function addScore(nScore) {
       score += nScore;
@@ -896,7 +900,7 @@
       }
       if (e.keyCode === KEY.N) {
         startNewGame();
-      } else if (e.keyCode === KEY.S) {
+      } else if (e.keyCode === KEY.M) {
         audio.disableSound();
         localStorage["soundDisabled"] = !soundDisabled();
       } else if (e.keyCode === KEY.P && state === PAUSE) {
@@ -1228,6 +1232,10 @@
     ARROW_UP: 38,
     ARROW_RIGHT: 39,
     ARROW_DOWN: 40,
+    W: 87,
+    A: 65,
+    S: 83,
+    D: 68,
     PRINT_SCREEN: 44,
     INSERT: 45,
     DELETE: 46,
