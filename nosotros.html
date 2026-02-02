@@ -34,7 +34,7 @@
       membersTrack.className = 'members-track'
       
       // ============================================
-      // MIEMBROS DE LA BANDA - EDITAR AQUÍ
+      // MIEMBROS DE LA BANDA - EDITAR ACÁ
       // ============================================
       const members = [
         {
@@ -51,7 +51,8 @@
           issue: '18/02/2002',
           class: 'ARIA',
           sign: 'FALLEN',
-          signImage: 'img/banda/lulufirma.png'
+          signImage: 'img/banda/lulufirma.png',
+          instagram: '_fallenfromthesky'
         },
         {
           name: 'POLLO',
@@ -67,7 +68,8 @@
           issue: '11/09/2008',
           class: 'ITALIAN WHORES',
           sign: 'FCK POLLIN',
-          signImage: 'img/banda/pollofirma.png'
+          signImage: 'img/banda/pollofirma.png',
+          instagram: 'n0t.pollo'
         },
         {
           name: 'ALEJANDRO',
@@ -83,7 +85,8 @@
           issue: '18/05/2009',
           class: 'NORTHWEST',
           sign: 'ALE PICANTE',
-          signImage: 'img/banda/alefirma.png'
+          signImage: 'img/banda/alefirma.png',
+          instagram: 'aleizzz4'
         },
         {
           name: 'CIRO',
@@ -100,7 +103,8 @@
           class: 'LA LOMA NIGG3R',
           restr: 'YE-YE',
           sign: 'DOSED&CONFUSED',
-          signImage: 'img/banda/cirofirma.png'
+          signImage: 'img/banda/cirofirma.png',
+          instagram: 'ciroshll'
         },
         {
           name: 'LEA',
@@ -117,7 +121,8 @@
           class: 'SHOOTER',
           restr: 'YE-YE',
           sign: 'LEAN DRINK',
-          signImage: 'img/banda/leanfirma.png'
+          signImage: 'img/banda/leanfirma.png',
+          instagram: 'leatreuque_'
         },
         // Agregar más miembros copiando el bloque de arriba:
         // {
@@ -194,6 +199,11 @@
               }
             </div>
           </div>
+          ${
+            member.instagram
+              ? `<a href="https://www.instagram.com/${member.instagram}/" target="_blank" rel="noopener noreferrer" class="license-card-ig" aria-label="Instagram de ${member.name}"><i class="fab fa-instagram"></i></a>`
+              : ''
+          }
         `
         return card
       }
