@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
   <div class="texture-overlay"></div>
   <div class="container has-content" id="main-container"></div>
@@ -23,16 +25,16 @@
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('main-container')
       createHeader(container, false, 'nosotros')
-      
+
       const nosotrosContent = document.createElement('div')
       nosotrosContent.className = 'nosotros-content'
-      
+
       const membersSlider = document.createElement('div')
       membersSlider.className = 'members-slider'
 
       const membersTrack = document.createElement('div')
       membersTrack.className = 'members-track'
-      
+
       // ============================================
       // MIEMBROS DE LA BANDA - EDITAR ACÁ
       // ============================================
@@ -70,23 +72,6 @@
           sign: 'FCK POLLIN',
           signImage: 'img/banda/pollofirma.png',
           instagram: 'n0t.pollo'
-        },
-        {
-          name: 'ALEJANDRO',
-          photo: 'img/banda/ale.png',
-          role: 'GTR DESTROYER & COROS',
-          number: '02-00-00002',
-          dob: '13/01/2026',
-          exp: '13/10/2026',
-          ht: '1.70',
-          wt: '50',
-          eyes: 'CRIS BROWN',
-          sex: 'LADYBOY',
-          issue: '18/05/2009',
-          class: 'NORTHWEST',
-          sign: 'ALE PICANTE',
-          signImage: 'img/banda/alefirma.png',
-          instagram: 'aleizzz4'
         },
         {
           name: 'CIRO',
@@ -136,7 +121,7 @@
         // },
       ]
       // ============================================
-      
+
       members.forEach(member => {
         const card = createMemberCard(member)
         const slide = document.createElement('div')
@@ -144,11 +129,11 @@
         slide.appendChild(card)
         membersTrack.appendChild(slide)
       })
-      
+
       function createMemberCard(member) {
         const card = document.createElement('div')
         card.className = 'license-card'
-        
+
         card.innerHTML = `
           <div class="license-left">
             <div class="license-photo">
@@ -192,22 +177,20 @@
               <div><span class="label">ENDORSE</span><br><span class="value">PAPK</span></div>
             </div>
             <div class="license-sign-container">
-              ${
-                member.signImage
-                  ? `<img class="license-sign-image" src="${member.signImage}" alt="Firma de ${member.name}">`
-                  : `<div class="license-sign">${member.sign}</div>`
-              }
+              ${member.signImage
+            ? `<img class="license-sign-image" src="${member.signImage}" alt="Firma de ${member.name}">`
+            : `<div class="license-sign">${member.sign}</div>`
+          }
             </div>
           </div>
-          ${
-            member.instagram
-              ? `<a href="https://www.instagram.com/${member.instagram}/" target="_blank" rel="noopener noreferrer" class="license-card-ig" aria-label="Instagram de ${member.name}"><i class="fab fa-instagram"></i></a>`
-              : ''
+          ${member.instagram
+            ? `<a href="https://www.instagram.com/${member.instagram}/" target="_blank" rel="noopener noreferrer" class="license-card-ig" aria-label="Instagram de ${member.name}"><i class="fab fa-instagram"></i></a>`
+            : ''
           }
         `
         return card
       }
-      
+
       const prevButton = document.createElement('button')
       prevButton.className = 'slider-btn prev'
       prevButton.setAttribute('aria-label', 'Anterior')
@@ -253,11 +236,11 @@
       nextButton.addEventListener('click', () => goTo(currentIndex + 1))
       window.addEventListener('resize', updateSlider)
       setTimeout(updateSlider, 0)
-      
+
       const footerContainer = document.getElementById('footer-container')
       const footer = createFooter()
       footerContainer.appendChild(footer)
-      
+
       setTimeout(() => {
         if (typeof initFooter === 'function') {
           initFooter()
@@ -267,5 +250,5 @@
   </script>
   <script src="script.js" defer></script>
 </body>
-</html>
 
+</html>
