@@ -74,9 +74,7 @@ body {
             transparent 50%
         );
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
     font-family: sans-serif;
     position: relative;
     overflow-x: hidden;
@@ -474,33 +472,25 @@ body::after {
 }
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    padding: 15px 20px;
+    margin-top: 12px;
+    padding: 16px 20px 20px;
     text-align: center;
-    z-index: 100;
+    z-index: 2;
     font-family: "Courier New", Courier, monospace;
     font-size: 12px;
     color: #000000;
     background: transparent;
-    backdrop-filter: none;
-    border-top: none;
-    transition: opacity 0.28s ease, transform 0.28s ease;
-    will-change: opacity, transform;
 }
 
-body.footer-on-long-page .footer {
-    opacity: 0;
-    transform: translateY(120%);
-    pointer-events: none;
-}
-
-body.footer-on-long-page.footer-visible-at-bottom .footer {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+.home-page .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin-top: 0;
+    padding: 15px 20px;
+    z-index: 100;
 }
 
 .footer-content {
@@ -679,33 +669,37 @@ body.footer-on-long-page.footer-visible-at-bottom .footer {
 
 @media (max-width: 768px) {
     .nav-horizontal {
-        gap: 12px;
-        margin: 15px 0 25px;
+        column-gap: 14px;
+        row-gap: 8px;
+        margin: 15px 0 24px;
+        padding: 0 10px;
     }
 
     .nav-horizontal-link {
         font-size: 16px;
-        letter-spacing: 1.5px;
+        letter-spacing: 1.25px;
     }
 
     .nav-separator {
-        font-size: 16px;
+        display: none;
     }
 }
 
 @media (max-width: 480px) {
     .nav-horizontal {
-        gap: 10px;
+        column-gap: 12px;
+        row-gap: 8px;
         margin: 12px 0 20px;
+        padding: 0 8px;
     }
 
     .nav-horizontal-link {
         font-size: 14px;
-        letter-spacing: 1px;
+        letter-spacing: 0.9px;
     }
 
     .nav-separator {
-        font-size: 14px;
+        display: none;
     }
 }
 
@@ -823,11 +817,13 @@ body.footer-on-long-page.footer-visible-at-bottom .footer {
     .extras-card,
     .extras-card.reverse {
         flex-direction: column;
-        text-align: center;
+        align-items: flex-start;
+        text-align: left;
     }
 
     .extras-logo {
         flex: 0 0 auto;
+        align-self: center;
     }
 
     .extras-logo img {
@@ -835,11 +831,13 @@ body.footer-on-long-page.footer-visible-at-bottom .footer {
     }
 
     .extras-text {
-        align-items: center;
+        width: 100%;
+        align-items: flex-start;
     }
 
     .extras-links {
-        justify-content: center;
+        justify-content: flex-start;
+        gap: 10px;
     }
 }
 
@@ -857,12 +855,13 @@ body.footer-on-long-page.footer-visible-at-bottom .footer {
     }
 
     .extras-bio {
-        font-size: 13px;
+        font-size: 14px;
+        line-height: 1.55;
     }
 
     .extras-link {
-        font-size: 11px;
-        padding: 6px 10px;
+        font-size: 13px;
+        padding: 8px 12px;
     }
 }
 
@@ -1506,22 +1505,30 @@ body.footer-on-long-page.footer-visible-at-bottom .footer {
 .members-slider {
     position: relative;
     width: 100%;
-    max-width: 1400px;
+    max-width: 820px;
     margin: 0 auto;
-    overflow: visible;
-    padding: 10px 0;
+    overflow: hidden;
+    padding: 10px 56px;
 }
 
 .members-track {
     display: flex;
-    gap: 40px;
+    gap: 24px;
     transition: transform 0.35s ease;
     will-change: transform;
-    padding: 0 50px;
+    padding: 0;
 }
 
 .member-slide {
     flex: 0 0 auto;
+    opacity: 0.45;
+    transform: scale(0.96);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.member-slide.is-active {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .license-card {
@@ -1873,10 +1880,10 @@ body.footer-on-long-page.footer-visible-at-bottom .footer {
 }
 
 .slider-btn.prev {
-    left: 10px;
+    left: 8px;
 }
 .slider-btn.next {
-    right: 10px;
+    right: 8px;
 }
 
 @media (max-width: 768px) {
@@ -1886,7 +1893,7 @@ body.footer-on-long-page.footer-visible-at-bottom .footer {
     }
 
     .members-slider {
-        padding: 10px 46px;
+        padding: 10px 42px;
         overflow: hidden;
     }
 
@@ -1948,6 +1955,8 @@ body.footer-on-long-page.footer-visible-at-bottom .footer {
         width: 100%;
         display: flex;
         justify-content: center;
+        opacity: 1;
+        transform: none;
     }
 
     .slider-btn {

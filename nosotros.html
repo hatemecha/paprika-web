@@ -215,9 +215,13 @@
         const slides = Array.from(membersTrack.children)
         if (!slides.length) return
         if (isMobileStack()) {
+          slides.forEach(slide => slide.classList.remove('is-active'))
           membersTrack.style.transform = 'none'
           return
         }
+        slides.forEach((slide, index) => {
+          slide.classList.toggle('is-active', index === currentIndex)
+        })
         const slide = slides[currentIndex]
         const sliderWidth = membersSlider.clientWidth
         const slideCenter = slide.offsetLeft + slide.offsetWidth / 2

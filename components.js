@@ -20,6 +20,9 @@ const SITE_LINKS = {
 window.SITE_LINKS = SITE_LINKS;
 
 const createHeader = (container, isHome = false, activePage = "") => {
+  document.body.classList.remove("home-page", "inner-page");
+  document.body.classList.add(isHome ? "home-page" : "inner-page");
+
   const titleLink = document.createElement("a");
   titleLink.href = isHome ? "assets/cv.pdf" : "index.html";
   titleLink.className = "title-link";
