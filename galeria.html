@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Galería de fotos de PAPRIKA - Ensayos y fechas en vivo">
+  <title>Galeria - PAPRIKA | Fotos oficiales</title>
+  <meta name="description" content="Galeria de fotos de PAPRIKA: ensayos, sesiones y recitales en vivo.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#b50000">
+  <meta name="author" content="PAPRIKA">
+  <meta name="language" content="es">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="icon" type="image/png" href="img/paprikaperfeccionada.png">
-  <title>Galería - PAPRIKA</title>
+  <link rel="canonical" href="https://paprika.lol/galeria.html">
+  <link rel="alternate" hreflang="es-AR" href="https://paprika.lol/galeria.html">
+  <link rel="alternate" hreflang="es" href="https://paprika.lol/galeria.html">
+  <link rel="alternate" hreflang="x-default" href="https://paprika.lol/galeria.html">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="PAPRIKA">
+  <meta property="og:title" content="Galeria - PAPRIKA | Fotos oficiales">
+  <meta property="og:description" content="Galeria de fotos de PAPRIKA: ensayos, sesiones y recitales en vivo.">
+  <meta property="og:url" content="https://paprika.lol/galeria.html">
+  <meta property="og:image" content="https://paprika.lol/img/galeria.webp">
+  <meta property="og:image:alt" content="Galeria de fotos de PAPRIKA">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Galeria - PAPRIKA | Fotos oficiales">
+  <meta name="twitter:description" content="Galeria de fotos de PAPRIKA: ensayos, sesiones y recitales en vivo.">
+  <meta name="twitter:image" content="https://paprika.lol/img/galeria.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -15,10 +36,46 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "MusicGroup",
+          "@id": "https://paprika.lol/#musicgroup",
+          "name": "PAPRIKA",
+          "url": "https://paprika.lol/",
+          "image": "https://paprika.lol/img/paprikaperfeccionada.png"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://paprika.lol/#website",
+          "url": "https://paprika.lol/",
+          "name": "PAPRIKA",
+          "inLanguage": "es-AR"
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://paprika.lol/galeria.html#collectionpage",
+          "url": "https://paprika.lol/galeria.html",
+          "name": "Galeria - PAPRIKA | Fotos oficiales",
+          "description": "Galeria de fotos de PAPRIKA: ensayos, sesiones y recitales en vivo.",
+          "isPartOf": {
+            "@id": "https://paprika.lol/#website"
+          },
+          "about": {
+            "@id": "https://paprika.lol/#musicgroup"
+          },
+          "inLanguage": "es-AR"
+        }
+      ]
+    }
+  </script>
 </head>
 <body>
   <div class="texture-overlay"></div>
-  <div class="container has-content" id="main-container"></div>
+  <h1 class="sr-only">Galeria de fotos de PAPRIKA</h1>
+  <main class="container has-content" id="main-container" role="main"></main>
   <div id="footer-container"></div>
   <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js" defer></script>
   <script src="components.js" defer></script>
@@ -335,4 +392,3 @@
   <script src="script.js" defer></script>
 </body>
 </html>
-
