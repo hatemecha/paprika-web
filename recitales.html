@@ -40,12 +40,13 @@
         // entradas: '$5000 anticipada / $6000 en puerta',
         
         // Si no hay recital, dejar todo vacío o null:
-        flyer: 'flyertest.jpg',
-        fecha: '1 de Noviembre',
-        fechaCompleta: '2024-11-01',
-        horario: '21:00 hs',
-        direccion: 'Casa Marx, Berutti 902',
-        entradas: 'Entrada Gratis'
+        flyer: 'img/recitales/noisebloom-paprika-abril.webp',
+        fecha: 'Sábado 11 de Abril',
+        fechaCompleta: '2026-04-11',
+        horario: '23:00 hs',
+        direccion: 'Chilla Calavera, Alem 306',
+        entradas: '$3000 anticipada',
+        mapsUrl: 'https://maps.app.goo.gl/wfC2vVkj8wCaWusUA'
       }
       // ============================================
       
@@ -85,7 +86,7 @@
                 <i class="fas fa-map-marker-alt"></i>
                 <div class="info-content">
                   <span class="info-label">Dirección</span>
-                  <span class="info-value">${recitalData.direccion}</span>
+                  <a href="${recitalData.mapsUrl}" target="_blank" rel="noopener noreferrer" class="info-value info-value-link">${recitalData.direccion}</a>
                 </div>
               </div>
               <div class="info-item">
@@ -127,7 +128,7 @@
           </div>
         `
       }
-      
+
       container.appendChild(recitalesContent)
       
       const footerContainer = document.getElementById('footer-container')

@@ -487,6 +487,20 @@ body::after {
     background: transparent;
     backdrop-filter: none;
     border-top: none;
+    transition: opacity 0.28s ease, transform 0.28s ease;
+    will-change: opacity, transform;
+}
+
+body.footer-on-long-page .footer {
+    opacity: 0;
+    transform: translateY(120%);
+    pointer-events: none;
+}
+
+body.footer-on-long-page.footer-visible-at-bottom .footer {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .footer-content {
@@ -2378,6 +2392,18 @@ body::after {
     letter-spacing: 1px;
     color: white;
     line-height: 1.2;
+}
+
+.info-value-link {
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.45);
+    text-underline-offset: 2px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.info-value-link:hover {
+    color: #f0f0f0;
+    text-decoration-color: #b50000;
 }
 
 .ticket-button {
