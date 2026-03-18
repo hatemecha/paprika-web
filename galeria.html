@@ -28,8 +28,6 @@
   <meta name="twitter:title" content="Galeria - PAPRIKA | Fotos oficiales">
   <meta name="twitter:description" content="Galeria de fotos de PAPRIKA: ensayos, sesiones y recitales en vivo.">
   <meta name="twitter:image" content="https://paprika.lol/img/galeria.webp">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preload" href="assets/fonts/Druk-Wide-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/paprika-title.webp" as="image">
@@ -167,22 +165,22 @@
           <div class="explorer-body">
             <div class="explorer-sidebar">
               <div class="sidebar-section">
-                <div class="sidebar-item" data-folder="galeria">
+                <button type="button" class="sidebar-item" data-folder="galeria">
                   <i class="fa-solid fa-home"></i>
                   <span>Inicio</span>
-                </div>
-                <div class="sidebar-item" data-folder="fechas">
+                </button>
+                <button type="button" class="sidebar-item" data-folder="fechas">
                   <i class="fa-solid fa-calendar"></i>
                   <span>Fechas</span>
-                </div>
-                <div class="sidebar-item" data-folder="ensayos">
+                </button>
+                <button type="button" class="sidebar-item" data-folder="ensayos">
                   <i class="fa-solid fa-music"></i>
                   <span>Ensayos</span>
-                </div>
-                <div class="sidebar-item" data-folder="sesiones">
+                </button>
+                <button type="button" class="sidebar-item" data-folder="sesiones">
                   <i class="fa-solid fa-camera"></i>
                   <span>Sesiones</span>
-                </div>
+                </button>
               </div>
             </div>
             <div class="explorer-main" id="explorer-main">
@@ -228,6 +226,13 @@
           }
         })
       }, { rootMargin: '100px' })
+
+      const ensureLoadedCount = (folder) => {
+        if (!folder?.images) return
+        if (loadedCount === 0) {
+          loadedCount = Math.min(BATCH_SIZE, folder.images.length)
+        }
+      }
       
       function navigate(folderId, addToHistory = true) {
         currentPath = folderId
@@ -246,8 +251,15 @@
       }
       
       function updateNavButtons() {
-        btnBack.disabled = true
+        btnBack.disabled = historyIndex <= 0
         btnUp.disabled = true
+      }
+
+      function updateViewButtons() {
+        btnIcons.disabled = false
+        btnThumbnails.disabled = false
+        btnIcons.classList.toggle('active', viewMode === 'icons')
+        btnThumbnails.classList.toggle('active', viewMode === 'thumbnails')
       }
       
       function updateSidebar() {
@@ -258,6 +270,7 @@
       
       function renderFolder(folderId) {
         const folder = folders[folderId]
+        imageObserver.disconnect()
         filesContainer.innerHTML = ''
         filesContainer.className = viewMode === 'thumbnails' ? 'files-grid thumbnails' : 'files-grid'
         
@@ -275,34 +288,37 @@
         }
         
         if (folder.images) {
-          loadBatch(folderId, folder.images)
+          ensureLoadedCount(folder)
+          renderImages(folderId, folder.images)
           statusItems.textContent = `${folder.images.length} fotos`
         }
         
         initLightbox()
       }
       
-      function loadBatch(folderId, allImages) {
-        const batch = allImages.slice(loadedCount, loadedCount + BATCH_SIZE)
-        
-        batch.forEach(num => {
+      function renderImages(folderId, allImages) {
+        const imagesToRender = allImages.slice(0, loadedCount)
+
+        imagesToRender.forEach(num => {
           const filename = String(num).padStart(3, '0')
           filesContainer.appendChild(createImageItem(folderId, filename))
         })
-        
-        loadedCount += batch.length
-        
+
         const hasMore = loadedCount < allImages.length
         loadMoreContainer.style.display = hasMore ? 'flex' : 'none'
         
         if (hasMore) {
           btnLoadMore.innerHTML = `<i class="fa-solid fa-plus"></i> Cargar más (${allImages.length - loadedCount} restantes)`
+        } else {
+          btnLoadMore.innerHTML = '<i class="fa-solid fa-check"></i> Todo cargado'
         }
       }
       
       function createFolderItem(item) {
-        const el = document.createElement('div')
+        const el = document.createElement('button')
+        el.type = 'button'
         el.className = 'file-item folder'
+        el.setAttribute('aria-label', `Abrir carpeta ${item.name}`)
         el.innerHTML = `
           <div class="folder-icon-wrap">
             <i class="fa-solid fa-folder file-icon"></i>
@@ -311,12 +327,7 @@
           <span class="file-count">${item.count} fotos</span>
         `
         
-        const openFolder = () => navigate(item.id)
-        el.addEventListener('click', openFolder)
-        el.addEventListener('touchend', (e) => {
-          e.preventDefault()
-          openFolder()
-        })
+        el.addEventListener('click', () => navigate(item.id))
         
         return el
       }
@@ -326,15 +337,17 @@
         const format = folder?.format || 'webp'
         const extension = format.toLowerCase()
         const src = `img/${folderId}/${filename}.${extension}`
+        const thumbSrc = `img/thumbs/${folderId}/${filename}.webp`
         const el = document.createElement('a')
         el.href = src
         el.className = 'file-item image glightbox'
         el.setAttribute('data-gallery', 'paprika-gallery')
+        el.setAttribute('aria-label', `Abrir foto ${filename} de ${folder.name}`)
         
         if (viewMode === 'thumbnails') {
           el.innerHTML = `
             <div class="file-thumbnail">
-              <img data-src="${src}" alt="${filename}" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ddd' width='100' height='100'/%3E%3C/svg%3E">
+              <img data-src="${thumbSrc}" alt="Foto ${filename}" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23ddd' width='100' height='100'/%3E%3C/svg%3E" loading="lazy" decoding="async">
             </div>
           `
           const img = el.querySelector('img')
@@ -363,17 +376,31 @@
       }
       
       // Events
-      // Botones Atrás y Subir deshabilitados (solo visuales)
+      btnBack.addEventListener('click', () => {
+        if (historyIndex <= 0) return
+        historyIndex -= 1
+        navigate(history[historyIndex], false)
+      })
       
-      // Botones de vista deshabilitados (solo visuales)
-      btnIcons.disabled = true
-      btnThumbnails.disabled = true
+      btnIcons.addEventListener('click', () => {
+        if (viewMode === 'icons') return
+        viewMode = 'icons'
+        updateViewButtons()
+        renderFolder(currentPath)
+      })
+
+      btnThumbnails.addEventListener('click', () => {
+        if (viewMode === 'thumbnails') return
+        viewMode = 'thumbnails'
+        updateViewButtons()
+        renderFolder(currentPath)
+      })
       
       btnLoadMore.addEventListener('click', () => {
         const folder = folders[currentPath]
         if (folder?.images) {
-          loadBatch(currentPath, folder.images)
-          initLightbox()
+          loadedCount = Math.min(loadedCount + BATCH_SIZE, folder.images.length)
+          renderFolder(currentPath)
         }
       })
       
@@ -382,6 +409,8 @@
       })
       
       updateNavButtons()
+      updateViewButtons()
+      updateSidebar()
       renderFolder('galeria')
       
       const footerContainer = document.getElementById('footer-container')
