@@ -1286,6 +1286,11 @@ body::after {
 }
 
 .sidebar-item {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    font: inherit;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -1325,6 +1330,10 @@ body::after {
 }
 
 .file-item {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1338,6 +1347,14 @@ body::after {
 
 .file-item:hover {
     background: #e8f4fc;
+}
+
+.sidebar-item:focus-visible,
+.file-item:focus-visible,
+.toolbar-btn:focus-visible,
+.load-more-btn:focus-visible {
+    outline: 2px solid #316ac5;
+    outline-offset: 2px;
 }
 
 .folder-icon-wrap {
