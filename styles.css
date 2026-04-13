@@ -1216,6 +1216,35 @@ body::after {
     margin: 0 4px;
 }
 
+.gallery-sort-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #000;
+    margin-left: 2px;
+    flex-shrink: 0;
+}
+
+.gallery-sort-label {
+    white-space: nowrap;
+}
+
+.gallery-sort-select {
+    font-size: 11px;
+    padding: 2px 6px;
+    max-width: 170px;
+    border: 1px solid #a0a0a0;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #fff 0%, #e8e8e0 100%);
+    color: #000;
+    cursor: pointer;
+}
+
+.gallery-sort-select:focus {
+    outline: 1px solid #316ac5;
+}
+
 .explorer-addressbar {
     background: #ece9d8;
     padding: 3px 8px;
@@ -1422,8 +1451,79 @@ body::after {
     background: rgba(181, 0, 0, 1) !important;
 }
 
+.glightbox-topbar {
+    position: absolute;
+    top: max(16px, env(safe-area-inset-top, 0px));
+    right: max(16px, env(safe-area-inset-right, 0px));
+    z-index: 100003;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.glightbox-topbar .gclose {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    margin: 0 !important;
+    flex-shrink: 0;
+}
+
+.glightbox-download {
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    min-height: 40px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff !important;
+    text-decoration: none !important;
+    background: rgba(181, 0, 0, 0.8) !important;
+    border: 2px solid #fff !important;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+}
+.glightbox-download:hover {
+    background: rgba(181, 0, 0, 1) !important;
+    color: #fff !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
+    .glightbox-topbar {
+        top: max(10px, env(safe-area-inset-top, 0px));
+        right: max(10px, env(safe-area-inset-right, 0px));
+        gap: 8px;
+    }
+    .glightbox-download {
+        padding: 6px 10px;
+        font-size: 12px;
+        min-height: 36px;
+        gap: 4px;
+    }
+    .glightbox-download span {
+        display: none;
+    }
+
+    .gallery-sort-wrap {
+        max-width: min(200px, 45vw);
+    }
+    .gallery-sort-select {
+        max-width: 100%;
+    }
+
     .gallery-content {
         margin-top: 10px;
         padding: 0 8px 70px;
