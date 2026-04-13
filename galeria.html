@@ -366,7 +366,7 @@
       
       function createImageItem(folderId, filename) {
         const folder = folders[folderId]
-        const thumbSrc = `img/thumbs/${folderId}/${filename}.webp`
+        const thumbSrc = `img/${folderId}/${filename}.webp`
         const fullExt = folderId === 'ensayos' ? 'webp' : 'JPG'
         const fullSrc = `img/${folderId}/${filename}.${fullExt}`
         const el = document.createElement('a')
